@@ -1,0 +1,27 @@
+name: nintendo_eshop_repository
+description: "Repository to manage nintendo games."
+version: 0.0.1
+publish_to: none
+homepage:
+
+environment:
+  sdk: ^3.7.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  intl: ^0.20.2
+  equatable: ^2.0.7
+  json_annotation: ^4.9.0
+
+  nintendo_eshop_api:
+    path: ../nintendo_eshop_api
+  games_api:
+    path: ../games_api
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+
+  build_runner: ^2.4.15
+  json_serializable: ^6.9.4
+  mocktail: ^1.0.4
+  test: ^1.25.15
