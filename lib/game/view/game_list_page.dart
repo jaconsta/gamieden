@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gamieden/game/bloc/game_list_bloc.dart';
 import 'package:games_repository/games_repository.dart' as games_repository;
+import 'package:gamieden/game/repository/game_prices_repository.dart';
 import 'package:gamieden/game/widgets/game_block.dart';
+import 'package:nintendo_eshop_repository/nintendo_eshop_repository.dart';
+import 'package:steamstore_repository/steamstore_repository.dart';
 
 class GameListPage extends StatelessWidget {
   const GameListPage({super.key});
@@ -15,7 +18,19 @@ class GameListPage extends StatelessWidget {
           (context) => GameListBloc(
             gamesRepository: context.read<games_repository.GamesRepository>(),
           )..add(const GameListSubscriptionRequested()),
-      child: const GameListPageView(),
+      child: BlocListener<GameListBloc, GameListState>(
+        listenWhen:
+            (previous, current) =>
+                previous.status != current.status &&
+                current.status == GameListStatus.success,
+        listener:
+            (context, state) => GamePricesRepository(
+              gamesRepository: context.read<games_repository.GamesRepository>(),
+              steamStoreRepository: context.read<SteamstoreRepository>(),
+              nintendoEshopRepository: context.read<NintendoEshopRepository>(),
+            ).updatePrices(state.games),
+        child: const GameListPageView(),
+      ),
     );
   }
 }

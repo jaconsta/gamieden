@@ -26,4 +26,13 @@ class AddGameCubit extends Cubit<AddGameState> {
     }
     emit(state.copyWith(status: AddGameStatus.success));
   }
+
+  Future<void> removeGame(games_api.GameApi game) async {
+    try {
+      await _gamesRepository.deleteGame(game);
+      emit(state.copyWith(status: AddGameStatus.removed));
+    } catch (e) {
+      // The game can be called to delete when not yet added.
+    }
+  }
 }

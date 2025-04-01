@@ -39,12 +39,12 @@ class GameSummaryPage extends StatelessWidget {
                 state.game.steamId != gameId) {
               context.read<SteamGameCubit>().getGame(gameId);
             }
-            // Beamer.of(context).beamToNamed("/steamstore/add");
             return BlocListener<AddGameCubit, AddGameState>(
               listenWhen:
                   (previous, current) =>
                       previous.status != current.status &&
-                      current.status == AddGameStatus.success,
+                      (current.status == AddGameStatus.success ||
+                          current.status == AddGameStatus.removed),
               listener: (context, state) => Beamer.of(context).beamToNamed("/"),
               child: switch (state.status) {
                 SteamGameStatus.initial => const Placeholder(),

@@ -104,4 +104,13 @@ class SteamGame extends Equatable implements GameApi {
 
   @override
   GameSummary get summary => GameSummary(name: name, coverUrl: coverImage);
+
+  @override
+  SteamGame setPrice(GamePrice price) {
+    return copyWith(
+      currentPrice: price.currentPrice,
+      fullPrice: fullPrice,
+      discountPercent: discountPercent,
+    );
+  }
 }

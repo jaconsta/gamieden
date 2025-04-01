@@ -63,24 +63,38 @@ class GameBlock extends StatelessWidget {
               children: [
                 Align(alignment: Alignment.centerLeft, child: Text(text)),
                 Expanded(
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Transform.rotate(
-                      angle: 45,
-                      child: IconButton(
-                        onPressed: () {
-                          Beamer.of(context).beamToNamed(
-                            "/${game.source.urlDomain}/game/${game.sourceId}",
-                          );
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll<Color>(
-                            game.source.color.withValues(alpha: 0.2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          game.price.currentPrice,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      if (game.price.discountPercent != "0")
+                        Text("${game.price.discountPercent} %"),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Transform.rotate(
+                          angle: 45,
+                          child: IconButton(
+                            onPressed: () {
+                              Beamer.of(context).beamToNamed(
+                                "/${game.source.urlDomain}/game/${game.sourceId}",
+                              );
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll<Color>(
+                                game.source.color.withValues(alpha: 0.2),
+                              ),
+                            ),
+                            icon: Icon(Icons.arrow_upward),
                           ),
                         ),
-                        icon: Icon(Icons.arrow_upward),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ],

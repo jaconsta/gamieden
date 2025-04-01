@@ -68,15 +68,17 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider<games_repository.GamesRepository>(
-      create: (_) => createGamesRepository(),
-      // dispose: (repository) => repository.close(),
-      child: RepositoryProvider(
-        create: (_) => _nintendoEshopRepository,
-        child: BlocProvider(
-          create: (_) => SteamGameCubit(_steamStoreRepository),
-          child: GamiedenApp(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<games_repository.GamesRepository>(
+          create: (_) => createGamesRepository(),
         ),
+        RepositoryProvider(create: (_) => _nintendoEshopRepository),
+        RepositoryProvider(create: (_) => _steamStoreRepository),
+      ],
+      child: BlocProvider(
+        create: (_) => SteamGameCubit(_steamStoreRepository),
+        child: GamiedenApp(),
       ),
     );
   }

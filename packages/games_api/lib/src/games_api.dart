@@ -43,6 +43,8 @@ abstract class GameApi {
 
   /// From JSON object to [GameApi].
   JsonMap toJson();
+
+  GameApi setPrice(GamePrice price);
 }
 
 abstract class GameFactory {
@@ -78,3 +80,30 @@ class GamePrice {
 }
 
 class GamesApiNotFound implements Exception {}
+
+class EmptyGame implements GameApi {
+  const EmptyGame();
+
+  @override
+  GamePrice get price =>
+      GamePrice(currentPrice: "", fullPrice: "", discountPercent: "");
+
+  @override
+  GameApi setPrice(GamePrice price) {
+    return EmptyGame();
+  }
+
+  @override
+  GameSource get source => GameSource.none;
+
+  @override
+  String get sourceId => "";
+
+  @override
+  GameSummary get summary => GameSummary(name: "", coverUrl: "");
+
+  @override
+  JsonMap toJson() {
+    return {};
+  }
+}

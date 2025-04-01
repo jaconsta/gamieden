@@ -22,6 +22,17 @@ final routerDelegate = BeamerDelegate(
               child: nintendoeshop.SearchGameList(nameQuery: name),
             );
           },
+
+          "/nintendo/game/:gameId": (context, state, data) {
+            final gameId = state.pathParameters["gameId"]!;
+            return BeamPage(
+              key: ValueKey("nintendo-eshop-$gameId"),
+              title: "Nintendo game Id $gameId",
+              popToNamed: "/",
+              type: BeamPageType.slideTransition,
+              child: nintendoeshop.GameSummaryPage(gameId),
+            );
+          },
           "/steamstore/add": (context, state, data) => steamstore.GameAddPage(),
           "/steamstore/game/:gameId": (context, state, data) {
             final gameId = state.pathParameters["gameId"]!;

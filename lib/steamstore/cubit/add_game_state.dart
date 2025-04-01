@@ -1,6 +1,6 @@
 part of "add_game_cubit.dart";
 
-enum AddGameStatus { initial, loading, success, failure }
+enum AddGameStatus { initial, loading, success, failure, removed }
 
 final class AddGameState extends Equatable {
   final AddGameStatus status;
